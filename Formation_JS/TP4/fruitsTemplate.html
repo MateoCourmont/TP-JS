@@ -59,37 +59,20 @@
           <!-- tbody>tr>td*2 -->
           <tbody id="myTbody"></tbody>
         </table>
-        <script>
-          document.getElementById("btnAjouter").onclick = () => {
-            const fruit = document.getElementById("fruit").value;
-            // créer une balise <tr></tr>...
-            const tr = document.createElement("tr");
-            const td = document.createElement("td");
-            td.innerHTML = fruit;
-            const td2 = document.createElement("td");
-            const but = document.createElement("button");
-            but.className = "btn btn-danger"; // Ajouter la classe Bootstrap au bouton
-            but.innerHTML = '<i class="fa fa-trash"></i>'; // Ajouter l'icône
-            but.onclick = () => {
-              tr.remove(); // Supprimer la ligne associée
-            };
-
-            // Ajouter le bouton dans la cellule
-            td2.appendChild(but);
-
-            // Ajouter les cellules dans la ligne
-            tr.appendChild(td);
-            tr.appendChild(td2);
-
-            // Ajouter la ligne dans le tableau
-            document.getElementById("myTbody").appendChild(tr);
-
-            // Réinitialiser le champ de saisie
-            document.getElementById("fruit").value = "";
-          };
-        </script>
       </div>
     </div>
+    <template id="ajouterFruit">
+      <tr>
+        <td></td>
+        <td>
+          <button class="btn btn-danger">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </template>
+    <script src="fruitsTemplate.js"></script>
     <footer></footer>
+    </footer>
   </body>
 </html>
