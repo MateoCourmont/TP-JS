@@ -88,20 +88,33 @@
         </table>
         <script>
           document.getElementById("btnAjouter").onclick = () => {
-            // créer une balise <tr></tr>
+            const fruit = document.getElementById("fruit").value;
+            // créer une balise <tr></tr>...
             const tr = document.createElement("tr");
             const td = document.createElement("td");
-            td.innerHTML = fruit.value;
+            td.innerHTML = fruit;
             const td2 = document.createElement("td");
-            const but = document.createElement("button class='btn btn-danger'");
-            const trash = document.createElement("i class=fa fa-trash");
-            // ajouter une balise dans une autre
+            const but = document.createElement("button");
+            but.id = "delete";
+            but.className = "btn btn-danger"; // Ajouter la classe Bootstrap au bouton
+            but.innerHTML = '<i class="fa fa-trash"></i>'; // Ajouter l'icône
+
+            // Ajouter le bouton dans la cellule
+            td2.appendChild(but);
+
+            // Ajouter les cellules dans la ligne
+            tr.appendChild(td);
+            tr.appendChild(td2);
+
+            // Ajouter la ligne dans le tableau
             document.getElementById("myTbody").appendChild(tr);
-            document.getElementById("myTbody").appendChild(td);
-            document.getElementById("myTbody").appendChild(td2);
-            document.getElementById("myTbody").appendChild(but);
-            document.getElementById("myTbody").appendChild(trash);
           };
+
+          function Supprimer() {
+            document.getElementById("delete").onclick = (event) => {
+              document.getElementById("tr").remove();
+            };
+          }
         </script>
       </div>
     </div>
