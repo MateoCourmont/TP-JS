@@ -1,4 +1,15 @@
-document.getElementById('btnAjouter').onclick = ()=>{
+// Ajouter pour la touche "Entrée"
+document.getElementById('fruit').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      ajouterFruit();
+      event.preventDefault();
+    }
+  });
+  
+
+document.getElementById('btnAjouter').onclick = ajouterFruit;
+
+function ajouterFruit() {
     // mettre un selecteur sur le template
     const template = document.getElementById('ajouterFruit');
     // cloner le template
@@ -20,5 +31,4 @@ document.getElementById('myTbody').appendChild(clone);
 
 // Réinitialiser le champ de saisie
 document.getElementById('fruit').value = '';
-
 }
