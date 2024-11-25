@@ -1,4 +1,5 @@
-Ceci est un dossier contenant des TP JavaScript :
+## TP JavaScript :
 
--Calculateur de consommation d'essence
--Liste avec ajout et suppression
+**-Calculateur de consommation d'essence** <br>
+**-Liste avec ajout et suppression** <br>
+**-Liste avec ajout et suppression (template)**
