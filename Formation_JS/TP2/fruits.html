@@ -57,34 +57,7 @@
             </tr>
           </thead>
           <!-- tbody>tr>td*2 -->
-          <tbody id="myTbody">
-            <tr>
-              <td>pomme</td>
-              <td>
-                <button class="btn btn-danger">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>poire</td>
-              <td>
-                <button class="btn btn-danger">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>cerise</td>
-              <td>
-                <button class="btn btn-danger">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="myTbody"></tbody>
         </table>
         <script>
           document.getElementById("btnAjouter").onclick = () => {
@@ -95,9 +68,11 @@
             td.innerHTML = fruit;
             const td2 = document.createElement("td");
             const but = document.createElement("button");
-            but.id = "delete";
             but.className = "btn btn-danger"; // Ajouter la classe Bootstrap au bouton
             but.innerHTML = '<i class="fa fa-trash"></i>'; // Ajouter l'icône
+            but.onclick = () => {
+              tr.remove(); // Supprimer la ligne associée
+            };
 
             // Ajouter le bouton dans la cellule
             td2.appendChild(but);
@@ -109,19 +84,9 @@
             // Ajouter la ligne dans le tableau
             document.getElementById("myTbody").appendChild(tr);
           };
-
-          function Supprimer() {
-            document.getElementById("delete").onclick = (event) => {
-              document.getElementById("tr").remove();
-            };
-          }
         </script>
       </div>
     </div>
-    <footer class="py-5 bg-dark">
-      <div class="container px-4 px-lg-5">
-        <p class="m-0 text-center text-white">Copyright &copy;IMC 2023</p>
-      </div>
-    </footer>
+    <footer></footer>
   </body>
 </html>
