@@ -41,7 +41,7 @@ function gameDone() {
 
         console.log("tableau vide");
 
-        resetGame();
+        setTimeout(resetGame, 4000);
     }
 
     else {
