@@ -1,8 +1,8 @@
-// Ajouter pour la touche "Entrée"
+// Ajouter un gestionnaire d'événement pour la touche "Entrée"
 document.getElementById('fruit').addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       ajouterFruit();
-      event.preventDefault();
+      event.preventDefault(); // Empêche le comportement par défaut du formulaire
     }
   });
   
