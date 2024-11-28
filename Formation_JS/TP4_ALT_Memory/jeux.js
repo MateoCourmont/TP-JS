@@ -35,7 +35,10 @@ let secondCard = null;
 function gameDone() {
     if (tab2.length === 0) {
         // Récupérer l'élément h1 et afficher un message de fin de jeu
-        document.getElementById("gameDone").innerHTML = 'Félicitations ! Vous avez gagné !';
+        const gameMessage = document.getElementById("gameDone");
+        gameMessage.innerHTML = 'Félicitations ! Vous avez gagné !';
+        gameMessage.style.display = "block";
+
         console.log("tableau vide");
 
         resetGame();
@@ -77,37 +80,34 @@ function ManageCard() {
         // Récupérer l'élément image dans le clone et définir le numéro de l'image
         const imageIndex = clone.querySelector('img');
         imageIndex.src = `img/${imageNumber}.webp`;
-        // Div du cadre
-        const cardDiv = clone.querySelector('div');
         // Ajouter le clone (carte) au conteneur
         container.appendChild(clone);
 
         //Suppression d'image lors du clic
         imageIndex.onclick = () => {
-            if (cardDiv.classList.contains('click')) {
+            if (imageIndex.classList.contains('click')) {
                 return; // Si la carte est déjà retournée, on ne fait rien
             }
             // Marquer la carte comme retournée
-            cardDiv.classList.add('click');
+            imageIndex.classList.add('click');
 
             if (firstCard == null ) {
-                firstCard = { imageNumber, cardDiv, imageElement: imageIndex };
+                firstCard = { imageNumber, imageElement: imageIndex };
                 return;
             }
             // Si c'est la deuxième carte, la mémoriser
-            secondCard = { imageNumber, cardDiv, imageElement: imageIndex };
+            secondCard = { imageNumber, imageElement: imageIndex };
 
             // Vérifier si les cartes correspondent
             if (firstCard.imageNumber === secondCard.imageNumber) {
                     // Les cartes sont identiques donc -> supprimer les éléments du tableau
-                    firstCard.cardDiv.remove();
-                    secondCard.cardDiv.remove();
+                    firstCard.imageElement.remove();
+                    secondCard.imageElement.remove();
 
                      // Supprimer les cartes du tableau
                     const firstIndex = tab2.indexOf(firstCard.imageNumber);
-                    const secondIndex = tab2.indexOf(secondCard.imageNumber);
-
-                    if (firstIndex > -1) tab2.splice(firstIndex, 1);  
+                    if (firstIndex > -1) tab2.splice(firstIndex, 1);
+                    const secondIndex = tab2.indexOf(secondCard.imageNumber);  
                     if (secondIndex > -1) tab2.splice(secondIndex, 1);  
 
                     console.log(tab2)
@@ -122,8 +122,8 @@ function ManageCard() {
 
             else {
                 // Supprimer la classe click si les cartes ne sont pas identiques
-                firstCard.cardDiv.classList.remove('click');
-                secondCard.cardDiv.classList.remove('click')
+                firstCard.imageElement.classList.remove('click');
+                secondCard.imageElement.classList.remove('click')
 
                 // Réinitialiser les cartes
                 firstCard = null;

@@ -3,7 +3,7 @@ body {
   background-image: url("bg.webp");
 }
 
-.click {
+.green {
   border-color: rgb(92, 220, 0) !important;
   opacity: 0.6;
 }
