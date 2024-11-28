@@ -1,4 +1,4 @@
-`const tab1 = [];
+const tab1 = [];
 for (let i = 0; i <= 11; i++) {
 tab1.push(i);
 }
@@ -129,4 +129,3 @@ const clone = template.content.cloneNode(true);
 }
 
 ManageCard();
-`
