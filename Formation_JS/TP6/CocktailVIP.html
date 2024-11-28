@@ -42,6 +42,7 @@
             <div class="row">
               <div class="col-4">
                 <input
+                  id="Prenom"
                   aria-label="Prénom"
                   class="form-control"
                   placeholder="Prénom"
@@ -49,13 +50,14 @@
               </div>
               <div class="col-4">
                 <input
+                  id="Nom"
                   aria-label="Nom"
                   class="form-control"
                   placeholder="Nom"
                 />
               </div>
               <div class="col-1">
-                <button class="btn btn-success">
+                <button class="btn btn-success" id="ajouter">
                   <i class="fa fa-plus"></i>
                 </button>
               </div>
@@ -73,24 +75,8 @@
                 <th colspan="2">Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <template>
-                <tr class="table-success" data-indice="0">
-                  <!--table-danger si ligne rouge pas invité-->
-                  <td><!--Prenom-->></td>
-                  <td><!--NOM--></td>
-                  <td>
-                    <button class="btn btn-danger">
-                      <i class="fa fa-trash"></i>
-                    </button>
-                  </td>
-                  <td>
-                    <button class="btn btn-warning">
-                      <i class="fa fa-check"></i>
-                    </button>
-                  </td>
-                </tr>
-              </template>
+            <tbody id="MyTbody">
+              <!--ajout de la template à ce niveau-->
             </tbody>
           </table>
         </div>
@@ -99,6 +85,23 @@
       <!-- row -->
     </div>
     <footer></footer>
+    <template>
+      <tr>
+        <!--table-danger si ligne rouge pas invité/success si vert-->
+        <td><!--Prenom-->></td>
+        <td><!--NOM--></td>
+        <td>
+          <button class="btn btn-danger">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-warning">
+            <i class="fa fa-check"></i>
+          </button>
+        </td>
+      </tr>
+    </template>
     <script src="Cocktail.js" defer></script>
   </body>
 </html>
