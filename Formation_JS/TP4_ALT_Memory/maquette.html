@@ -10,11 +10,24 @@
   <link rel="stylesheet" href="style.css" />
 
   <body>
+    <div
+      class="timer_container"
+      id="timer"
+      style="
+        font-size: 30px;
+        color: white;
+        text-align: center;
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      "
+    ></div>
     <h1 id="gameDone"></h1>
     <div class="container"></div>
     <script src="jeux.js" defer></script>
     <template id="individualCard">
-      <div><img src="" alt="image_carte" /></div>
+      <div class="card"><img src="" alt="image_carte" /></div>
     </template>
   </body>
 </html>

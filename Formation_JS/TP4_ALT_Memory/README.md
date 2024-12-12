@@ -1,26 +1,53 @@
-const tab1 = [];
+```const tab1 = [];
 for (let i = 0; i <= 11; i++) {
-tab1.push(i);
+  tab1.push(i);
 }
 
 let tab2 = tab1.concat(tab1);
+
+let timer;
+const timerElement = document.getElementById("timer");
+
+// Fonction pour démarrer le chrono
+function startTimer() {
+  count = 30; // Réinitialiser le chrono à 60 secondes
+
+  // Si un intervalle existe déjà, on l'arrête avant de démarrer un nouveau chrono
+  if (timer) {
+    clearInterval(timer);
+  }
+
+  timer = setInterval(function () {
+    count--;
+    timerElement.textContent = `Temps restant : ${count}s`;
+    console.log(count);
+    if (count === 0) {
+      clearInterval(timer);
+      const gameMessage = document.getElementById("gameDone");
+      gameMessage.innerHTML = "PERDU !";
+      gameMessage.style.display = "block";
+      setTimeout(resetGame, 4000);
+      console.log("Temps écoulé !");
+    }
+  }, 1000);
+}
 
 // console.log(tab1)
 
 //console.log(tab2)
 
 function melanger(tab) {
-let shuffled = [];
-for (let i = 0; i < tab.length; i++) {
-do {
-// je genere un nb alea de 0 à taille du tableau
-x = Math.floor(Math.random() \* tab.length);
-} while (shuffled[x] != undefined);
-// tant que l'emplacement n'est pas vide
-shuffled[x] = tab[i];
-}
+  let shuffled = [];
+  for (let i = 0; i < tab.length; i++) {
+    do {
+      // je genere un nb alea de 0 à taille du tableau
+      x = Math.floor(Math.random() * tab.length);
+    } while (shuffled[x] != undefined);
+    // tant que l'emplacement n'est pas vide
+    shuffled[x] = tab[i];
+  }
 
-return shuffled;
+  return shuffled;
 }
 
 tab2 = melanger(tab2);
@@ -31,44 +58,46 @@ let firstCard = null;
 let secondCard = null;
 
 function gameDone() {
-if (tab2.length === 0) {
-// Récupérer l'élément h1 et afficher un message de fin de jeu
-const gameMessage = document.getElementById("gameDone");
-gameMessage.innerHTML = "Félicitations ! Vous avez gagné !";
-gameMessage.style.display = "block";
+  if (tab2.length === 0) {
+    // Récupérer l'élément h1 et afficher un message de fin de jeu
+    const gameMessage = document.getElementById("gameDone");
+    gameMessage.innerHTML = "Félicitations ! Vous avez gagné !";
+    gameMessage.style.display = "block";
 
     console.log("tableau vide");
 
     setTimeout(resetGame, 4000);
-
-} else {
-console.log("tableau PAS vide");
-}
+  } else {
+    console.log("tableau PAS vide");
+  }
 }
 
 function resetGame() {
-// Réinitialiser le tableau tab2
-tab2 = melanger(tab1.concat(tab1)); // Mélanger
+  // Réinitialiser le tableau tab2
+  tab2 = melanger(tab1.concat(tab1)); // Mélanger
 
-// Cacher le message de fin de jeu
-const gameMessage = document.getElementById("gameDone");
-gameMessage.style.display = "none"; // Cacher le message
+  // Cacher le message de fin de jeu
+  const gameMessage = document.getElementById("gameDone");
+  gameMessage.style.display = "none"; // Cacher le message
 
-// Réinitialiser le container
-const container = document.querySelector(".container");
-container.innerHTML = "";
+  // Réinitialiser le container
+  const container = document.querySelector(".container");
+  container.innerHTML = "";
 
-// Relancer le jeu
-ManageCard();
+  // Relancer le jeu
+  ManageCard();
+  // Relancer le timer
+  startTimer();
 }
 
 function ManageCard() {
-// Sélectionner le conteneur pour insérer les cartes
-const container = document.querySelector(".container");
-// Parcourir le tableau mélangé
-for (let i = 0; i < tab2.length; i++) {
-const template = document.getElementById("individualCard");
-const clone = template.content.cloneNode(true);
+  // Sélectionner le conteneur pour insérer les cartes
+  const container = document.querySelector(".container");
+
+  // Parcourir le tableau mélangé
+  for (let i = 0; i < tab2.length; i++) {
+    const template = document.getElementById("individualCard");
+    const clone = template.content.cloneNode(true);
 
     // Utiliser la valeur de tab2[i] pour créer l'image correspondante
     const imageNumber = tab2[i];
@@ -124,8 +153,9 @@ const clone = template.content.cloneNode(true);
         secondCard = null;
       }
     };
-
-}
+  }
 }
 
 ManageCard();
+startTimer();
+```

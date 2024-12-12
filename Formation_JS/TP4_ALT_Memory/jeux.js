@@ -5,6 +5,33 @@ for (let i = 0; i <= 11; i++) {
 
 let tab2 = tab1.concat(tab1);
 
+let timer;
+const timerElement = document.getElementById("timer");
+
+// Fonction pour démarrer le chrono
+function startTimer() {
+  count = 30; // Réinitialiser le chrono à 60 secondes
+
+  // Si un intervalle existe déjà, on l'arrête avant de démarrer un nouveau chrono
+  if (timer) {
+    clearInterval(timer);
+  }
+
+  timer = setInterval(function () {
+    count--;
+    timerElement.textContent = `Temps restant : ${count}s`;
+    console.log(count);
+    if (count === 0) {
+      clearInterval(timer);
+      const gameMessage = document.getElementById("gameDone");
+      gameMessage.innerHTML = "PERDU !";
+      gameMessage.style.display = "block";
+      setTimeout(resetGame, 4000);
+      console.log("Temps écoulé !");
+    }
+  }, 1000);
+}
+
 // console.log(tab1)
 
 //console.log(tab2)
@@ -59,11 +86,14 @@ function resetGame() {
 
   // Relancer le jeu
   ManageCard();
+  // Relancer le timer
+  startTimer();
 }
 
 function ManageCard() {
   // Sélectionner le conteneur pour insérer les cartes
   const container = document.querySelector(".container");
+
   // Parcourir le tableau mélangé
   for (let i = 0; i < tab2.length; i++) {
     const template = document.getElementById("individualCard");
@@ -127,3 +157,4 @@ function ManageCard() {
 }
 
 ManageCard();
+startTimer();
