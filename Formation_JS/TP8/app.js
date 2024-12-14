@@ -2,8 +2,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-//const path = require("path");
+const cors = require("cors");
 const vipsRoutes = require("./routes/vipsRoutes");
+const viewsRoutes = require("./routes/viewsRoutes");
 
 dotenv.config();
 
@@ -13,8 +14,13 @@ const app = express();
 // Autoriser le back à recevoir des données dans le body
 app.use(express.json());
 
+app.use(cors());
+
 // Routes
 app.use("/api", vipsRoutes);
+app.use("/", viewsRoutes);
+
+//app.use("/pages", viewsRoutes);
 
 // Quand je suis connecté à la bdd (evenementiel)
 mongoose.connection.once("open", () => {

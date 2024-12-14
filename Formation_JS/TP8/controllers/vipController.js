@@ -43,7 +43,10 @@ const getVIPById = async (request, response) => {
 
 const addVIP = async (request, response) => {
   const vipJson = request.body;
-  const existingVip = await Vip.findOne({ nom: vipJson.nom });
+  const existingVip = await Vip.findOne({
+    nom: vipJson.nom,
+    prenom: vipJson.prenom,
+  });
 
   if (!vipJson.nom || !vipJson.prenom) {
     return response.json({
@@ -68,7 +71,7 @@ const addVIP = async (request, response) => {
   }
 
   if (existingVip) {
-    return response.json({
+    return response.status(409).json({
       code: "701",
       message: "Impossible d'ajouter un VIP déjà existant",
       data: null,
@@ -79,11 +82,17 @@ const addVIP = async (request, response) => {
 
   await newVip.save();
 
+  // Convertir l'ObjectId en chaîne de caractères
+  const vipId = newVip._id.toString();
+
+  console.log("ID du VIP ajouté :", vipId); // Log de l'ID
+
   // Retourner un json
   return response.json({
     code: "200",
     message: "VIP ajouté avec succès",
     data: vipJson,
+    data: { _id: vipId }, // Vérifie que l'ID est bien retourné
   });
 };
 
