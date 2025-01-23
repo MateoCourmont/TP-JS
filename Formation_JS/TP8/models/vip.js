@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const vipSchema = new mongoose.Schema({
   prenom: { type: String },
   nom: { type: String },
+  status: { type: Boolean, default: false },
 });
 
 // Créer le modèle basé sur le schéma

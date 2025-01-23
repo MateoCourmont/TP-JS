@@ -165,4 +165,44 @@ const deleteVIP = async (request, response) => {
   });
 };
 
-module.exports = { getVIPs, getVIPById, addVIP, updateVIP, deleteVIP };
+// Fonction pour changer le statut (true/false) d'un VIP
+const updateStatus = async (request, response) => {
+  const { id } = request.params;
+  const { status } = request.body;
+  try {
+    const vip = await Vip.findById(id);
+    if (!vip) {
+      return response.status(404).json({
+        code: "404",
+        message: "VIP non trouvé",
+        data: null,
+      });
+    }
+
+    vip.status = status;
+
+    await vip.save();
+
+    return response.status(200).json({
+      code: "200",
+      message: "Le statut du VIP a été mis à jour avec succès",
+      data: vip,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour du statut du VIP", error);
+    return response.status(500).json({
+      code: "500",
+      message: "Erreur lors de la mise à jour du statut",
+      data: null,
+    });
+  }
+};
+
+module.exports = {
+  getVIPs,
+  getVIPById,
+  addVIP,
+  updateVIP,
+  deleteVIP,
+  updateStatus,
+};

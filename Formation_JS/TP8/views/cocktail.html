@@ -77,20 +77,20 @@
     // Fonction pour récupérer les VIP depuis la base de données et les afficher
     async function loadVIPs() {
       try {
-        const response = await fetch("http://127.0.0.1:5000/api/vips"); // Appel à l'API backend pour récupérer les VIPs
+        const response = await fetch("http://127.0.0.1:5000/api/vips");
 
         if (response.ok) {
           const data = await response.json();
 
           if (data.code === "701") {
             // Si la liste est vide
-            console.log(data.message); // Affiche un message dans la console (optionnel)
+            console.log(data.message);
             return;
           }
 
           // Ajouter les VIP dans le tableau
           const tbody = document.querySelector("tbody");
-          tbody.innerHTML = ""; // Vide le tableau avant de le remplir
+          tbody.innerHTML = "";
 
           data.data.forEach((vip) => {
             const template = document.getElementById("myTemplate");
@@ -104,6 +104,19 @@
 
             // Associer l'ID au tr
             clone.querySelector("tr").dataset.id = vip._id;
+            clone.querySelector("tr").dataset.status = vip.status;
+
+            // Mettre à jour le bouton en fonction du statut
+            const statusButton = clone.querySelector("#status");
+            if (vip.status) {
+              // Si le statut est true, mettre le bouton en vert
+              statusButton.classList.add("bg-green-300");
+              statusButton.classList.remove("bg-orange-300");
+            } else {
+              // Sinon, le mettre en orange
+              statusButton.classList.add("bg-orange-300");
+              statusButton.classList.remove("bg-green-300");
+            }
 
             // Ajouter la ligne au tableau
             tbody.appendChild(clone);
@@ -255,5 +268,62 @@
           }
         }
       });
+    // Fonction pour changer le statut du VIP
+    async function toggleStatus(vipId, currentStatus) {
+      try {
+        // On inverse le statut actuel (true -> false, false -> true)
+        const newStatus = !currentStatus;
+
+        const response = await fetch(
+          `http://127.0.0.1:5000/api/vip/${vipId}/status`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ status: newStatus }), // Envoi du nouveau statut
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Statut mis à jour :", data);
+
+          const statusButton = document.querySelector(
+            `[data-id="${vipId}"] #status`
+          );
+
+          // On met à jour l'apparence du bouton en fonction du nouveau statut
+          if (newStatus) {
+            statusButton.classList.add("bg-green-300");
+            statusButton.classList.remove("bg-orange-300");
+          } else {
+            statusButton.classList.add("bg-orange-300");
+            statusButton.classList.remove("bg-green-300");
+          }
+
+          // Mettre à jour le dataset du statut
+          const tr = statusButton.closest("tr");
+          // Mettre à jour l'état du statut dans l'élément tr
+          tr.dataset.status = newStatus;
+        } else {
+          console.error("Erreur lors de la mise à jour du statut");
+        }
+      } catch (error) {
+        console.error("Erreur :", error);
+      }
+    }
+
+    // Gestion du clic sur le bouton spour changer le statut
+    document.querySelector("tbody").addEventListener("click", function (event) {
+      const statusButton = event.target.closest("#status");
+      if (statusButton) {
+        const tr = statusButton.closest("tr");
+        const vipId = tr.dataset.id;
+        const currentStatus = tr.dataset.status === "true";
+
+        toggleStatus(vipId, currentStatus);
+      }
+    });
   </script>
 </html>
