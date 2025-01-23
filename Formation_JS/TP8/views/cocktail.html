@@ -74,6 +74,51 @@
     </template>
   </body>
   <script>
+    // Fonction pour récupérer les VIP depuis la base de données et les afficher
+    async function loadVIPs() {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/api/vips"); // Appel à l'API backend pour récupérer les VIPs
+
+        if (response.ok) {
+          const data = await response.json();
+
+          if (data.code === "701") {
+            // Si la liste est vide
+            console.log(data.message); // Affiche un message dans la console (optionnel)
+            return;
+          }
+
+          // Ajouter les VIP dans le tableau
+          const tbody = document.querySelector("tbody");
+          tbody.innerHTML = ""; // Vide le tableau avant de le remplir
+
+          data.data.forEach((vip) => {
+            const template = document.getElementById("myTemplate");
+            const clone = template.content.cloneNode(true);
+
+            const cells = clone.querySelectorAll("td");
+
+            // Remplir les cellules avec les données du VIP
+            cells[0].innerHTML = vip.prenom;
+            cells[1].innerHTML = vip.nom;
+
+            // Associer l'ID au tr
+            clone.querySelector("tr").dataset.id = vip._id;
+
+            // Ajouter la ligne au tableau
+            tbody.appendChild(clone);
+          });
+        } else {
+          console.error("Erreur lors de la récupération des VIPs.");
+        }
+      } catch (error) {
+        console.error("Une erreur s'est produite :", error);
+      }
+    }
+
+    // Charger les VIP existants lorsque la page est chargée
+    document.addEventListener("DOMContentLoaded", loadVIPs);
+
     // Fonction pour envoyer les données du VIP au serveur et récupérer l'ID
     async function addVIPToDatabase(vipData) {
       try {
